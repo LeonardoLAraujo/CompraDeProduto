@@ -1,0 +1,347 @@
+class Produto{
+    private nome: string;
+    public valor: number;
+    private tipo: string;
+
+    constructor(nome: string, valor: number, tipo: string){
+        this.nome = nome;
+        this.valor = valor;
+        this.tipo = tipo;
+    }
+
+    public getNome(){
+        return this.nome;
+    }
+    public setNome(nomeProduto: string){
+        this.nome = nomeProduto;
+    }
+
+    public getValor(){
+        return this.valor;
+    }
+    public setValor(valorProduto: number){
+        this.valor = valorProduto;
+    }
+
+    public getTipo(){
+        return this.tipo;
+    }
+    public setTipo(tipoProduto: string){
+        this.tipo = tipoProduto;
+    }
+}
+
+class Empresa{
+    private nome: string;
+    private cnpj: string | number;
+    private ramo: string;
+
+    constructor(nome: string, cnpj: string | number, ramo: string){
+        this.nome = nome;
+        this.cnpj = cnpj;
+        this.ramo = ramo;
+    }
+
+    public getNome(){
+        return this.nome;
+    }
+    public setNome(nomeEmpresa: string){
+        this.nome = nomeEmpresa;
+    }
+
+    public getCnpj(){
+        return this.cnpj;
+    }
+    public setCnpj(cnpj: string | number){
+        this.cnpj = cnpj;
+    }
+
+    public getRamo(){
+        return this.ramo;
+    }
+    public setRamo(ramo: string){
+        this.ramo = ramo;
+    }
+}
+
+class Eletronico extends Produto{
+    private tensao: number;
+    empresa: Empresa;
+
+    constructor(nome: string, valor: number, tipo: string, empresa: Empresa, tensao: number){
+        super(nome, valor, tipo);
+        this.empresa = empresa;
+        this.tensao = tensao;
+    }
+
+    public getTensao(){
+        return this.tensao;
+    }
+    public setTensao(tensao: number){
+        this.tensao = tensao;
+    }
+}
+
+class Alimentar extends Produto{;
+    private madura: boolean;
+    private kilo: number;
+    empresa: Empresa;
+
+    constructor(nome: string, valor: number, tipo: string, madura: boolean, kilo: number, empresa: Empresa){
+        super(nome, valor, tipo);
+        this.madura = madura;
+        this.kilo = kilo;
+        this.empresa = empresa;
+    }
+
+    public getMadura(){
+        return this.madura;
+    }
+    public setMadura(madura: boolean){
+        this.madura = madura;
+    }
+
+    public getKilo(){
+        return this.kilo;
+    }
+    public setKilo(kilo: number){
+        this.kilo = kilo;
+    }
+}
+
+class Brinquedo extends Produto{
+    private estrutura: string;
+    empresa: Empresa;
+
+    constructor(nome: string, valor: number, tipo: string, empresa: Empresa, estrutura: string){
+        super(nome, valor, tipo);
+        this.empresa = empresa;
+        this.estrutura = estrutura;
+    }
+
+    public getEstrutura(){
+        return this.estrutura;
+    }
+    public setEstrutura(estrutura: string){
+        this.estrutura = estrutura;
+    }
+
+}
+
+class Carrinho{
+
+    private produtos: Produto[] = [];   
+
+    public addLista<T extends Produto>(produto: T): void{
+        this.produtos.push(produto);
+    }
+
+    //Remover Produto escolhido
+    public removerProduto<T extends Produto>(produto: T): void{
+        this.produtos.map((item) => {
+            if(item === produto){
+                let indexProduto = this.produtos.indexOf(item);
+                this.produtos.splice(indexProduto, 1);
+            }
+        })
+    }
+
+    public getLista(): Produto[]{
+        return this.produtos;
+    }
+
+    public totalCompra(): number{
+        let totalCompra: number = 0;
+        let valor: number;
+        for(let i = 0; i < this.produtos.length; i++){
+           valor = this.produtos[i].getValor();
+           totalCompra = valor + totalCompra;
+        }
+       
+        return totalCompra;
+
+    }
+}
+
+class Usuario{
+    private nome: string;
+    private cpf: string | number;
+    private cep: string | number;
+    private bairro: string;
+    private cidade: string;
+    private numeroCasa: number;
+    cartaoCredito: CartaoCredito;
+    cartaoDebito: CartaoDebito;
+
+    constructor(nome: string, cpf: string | number, cep: string | number, bairro: string, cidade: string, numeroCasa: number, cartaoCredito: CartaoCredito, cartaoDebito: CartaoDebito){
+        this.nome = nome.toLowerCase();
+        this.cpf = cpf;
+        this.cep = cep;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.numeroCasa = numeroCasa;
+        this.cartaoCredito = cartaoCredito;
+        this.cartaoDebito = cartaoDebito;
+
+        //this.cartaoCredito.depositar(2343);
+    }
+
+    public getNome(){
+        return this.nome;
+    }
+    public setNome(nome: string){
+        this.nome = nome;
+    }
+
+    public getCpf(){
+        return this.cpf;
+    }
+    public setCpf(cpf: string | number){
+        this.cpf = cpf;
+    }
+
+    public getCep(){
+        return this.cep;
+    }
+    public setCep(cep: string | number){
+        this.cep = cep;
+    }
+
+    public getBairro(){
+        return this.bairro;
+    }
+    public setBairro(bairro: string){
+        this.bairro = bairro;
+    }
+
+    public getCidade(){
+        return this.cidade;
+    }
+    public setCidade(cidade: string){
+        this.cep = cidade;
+    }
+
+    public getNumeroCasa(){
+        return this.numeroCasa;
+    }
+    public setNumeroCasa(numeroCaso: number){
+        this.numeroCasa = numeroCaso;
+    }
+
+}
+
+class Cartao{
+    protected numero: number;
+    protected agencia: number;
+    protected cvv: number;
+    private saldo: number;
+    private tipo: string;
+
+    constructor(numero: number, agencia: number, cvv: number, saldo: number, tipo: string){
+        this.numero = numero;
+        this.agencia = agencia;
+        this.cvv = cvv;
+        this.saldo = saldo;
+        this.tipo = tipo;
+    }
+
+    public getSaldo(){
+        return this.saldo;
+    }
+    public setSaldo(saldo: number){
+        this.saldo = saldo;
+    }
+
+    public getTipo(){
+        return this.tipo;
+    }
+    public setTipo(tipo: string){
+        this.tipo = tipo;
+    }
+
+    public depositar(valor: number){
+        this.setSaldo(this.saldo + valor);
+    }
+
+    public retirar(valor: number){
+        this.setSaldo(this.saldo - valor);
+    }
+
+}
+
+class CartaoCredito extends Cartao{
+    
+    constructor(numero: number, agencia: number, cvv: number, saldo: number, tipo: string){
+        super(numero, agencia, cvv, saldo, tipo);
+        tipo = "CC";
+    }
+
+}
+
+class CartaoDebito extends Cartao{
+
+    constructor(numero: number, agencia: number, cvv: number, saldo: number, tipo: string){
+        super(numero, agencia, cvv, saldo, tipo);
+        tipo = "CD";
+    }
+
+}
+
+class FinalizarCompra{
+    usuario: Usuario;
+    formaPagamanto: string;
+    tipoCartao: string;
+    carrinho: Carrinho;
+    totalPagar: number;
+
+    constructor(usuario: Usuario, formaPagamento: string, tipoCartao: string, carrinho: Carrinho){
+        this.usuario = usuario;
+        this.formaPagamanto = formaPagamento;
+        this.tipoCartao = tipoCartao;
+        this.carrinho = carrinho;
+        this.totalPagar = carrinho.totalCompra();
+       
+        this.verificarTipoDoCartao(this.tipoCartao);
+    }
+
+    public verificarTipoDoCartao(tipoDoCartao: string){
+        if(tipoDoCartao === "CC"){
+            this.usuario.cartaoCredito.retirar(this.totalPagar);
+            console.log(this.usuario.cartaoCredito);
+        }else if(tipoDoCartao === "CD"){
+            console.log("Cartao de Debito");
+        }
+    }
+
+}
+
+//Empresas
+let lenovo = new Empresa("Lenovo", "3432432432432", "Eletronico");
+let sansung = new Empresa("Sansung", 2423432432, "Eletronico");
+let ssNatural = new Empresa("SS Natural", 5463543453, "Alimentar");
+
+//Produtos
+let computador = new Eletronico("Computador", 1500, "Eletronico", lenovo, 120);
+let boneca = new Brinquedo("Boneca de Pano", 60, "Brinquedo", sansung, "Pano");
+let banana = new Alimentar("Banana", 10, "Alimento", true, 1, ssNatural);
+
+//Carrinho
+const carrinho = new Carrinho();
+
+//Cartao
+const cartaoCredito = new CartaoCredito(124213, 1233, 111, 5000, "CC");
+const cartaoDebito = new CartaoDebito(5445423, 2343, 432, 654, "CD");
+
+//Usuario
+const usuario1 = new Usuario("Leonardo", 21213412424, 132131212, "Santa", "Rio grande", 3431, cartaoCredito, cartaoDebito);
+
+carrinho.addLista(computador);
+carrinho.addLista(boneca);
+carrinho.addLista(banana);
+carrinho.removerProduto(boneca);
+
+//Pagando o carrinho
+const pagarCompra = new FinalizarCompra(usuario1, "Catao de Credito", "CC", carrinho);
+console.log(pagarCompra);
+
+
